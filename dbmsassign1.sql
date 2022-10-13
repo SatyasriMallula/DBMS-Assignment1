@@ -2,7 +2,6 @@
 create database DBMS_Assign;
 use DBMS_Assign;
 
-
 create table SalesPeople(
 Snum int,
 primary key(Snum),
@@ -16,7 +15,7 @@ insert into SalesPeople values(1002 , 'Serres', 'Sanjose', 13);
 insert into SalesPeople values(1004 ,'Motika' ,'London' ,11);
 insert into SalesPeople values(1007 ,'Rifkin' ,'Barcelona' ,15);
 insert into SalesPeople values(1003 ,'Axelrod' ,'Newyork' ,10);
-
+select * from Salespeople;
 
 create table Customers(
 Cnum int,
@@ -36,7 +35,7 @@ insert into Customers values(2006 ,'Clemens' ,'London' ,1001);
 insert into Customers values(2008 ,'Cisneros' ,'Sanjose' ,1007);
 insert into Customers values(2007, 'Pereira' ,'Rome' ,1004);
 
-
+select * from Customers;
 create table Orders(
 Onum int,
 primary key(Onum),
@@ -61,25 +60,21 @@ insert into Orders values(3008 , 4273.00 ,'5-10-1990', 2006 ,1001);
 insert into Orders values(3010 , 1309.95, '6-10-1990' ,2004 ,1002);
 insert into Orders values(3011 , 9891.88 ,'6-10-1990', 2006, 1001);
 
-
--- DISPLAYING TABLE VALUES 
-select * from orders;
-select * from Customers;
-select * from SalesPeople;
+select * from Orders;
 
 
 
 
-select count(Sname) as count from SalesPeople where Sname like 'a%' or Sname like 'A%';
+select count(Sname) as numberofsalesPeople from SalesPeople where Sname like 'a%' or Sname like 'A%';
 
 
 select * from SalesPeople where Snum in (select Snum  from orders group by Snum having sum(Amt) > 2000);
 
 
-select count(Sname) as count1 from SalesPeople where City='Newyork';
+select count(Sname) as numberofpeople from SalesPeople where City='Newyork';
 
 
-select count(Sname) as count2  from SalesPeople where City='London' or City='Paris';
+select count(Sname) as count  from SalesPeople where City in('London','Paris');
 
 
-select sn.Sname,sn.City, count( os.Onum) as Total_Orders,os.Odate from SalesPeople sn join orders os on sn.Snum=os.Snum group by sn.Snum;
+select sn.Sname,sn.City, count( os.Onum) as Total_Orders,os.Odate from SalesPeople sn join orders os on sn.Snum=os.Snum group by os.snum;
